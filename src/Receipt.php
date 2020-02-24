@@ -12,4 +12,9 @@ class Receipt
   {
     return array_sum($items);
   }
+
+  public function tax($amount, $tax)
+  {
+    return ($amount * $tax);
+  }
 }
