@@ -47,6 +47,19 @@ class ReceiptTest extends TestCase
     );
   }
 
+  public function testPostTaxTotal()
+  {
+    $Receipt = $this->getMockBuilder('TDD\Receipt')
+        ->setMethods(['tax', 'total'])
+        ->getMock();
+    $Receipt->method('total')
+        ->will($this->returnValue(10.00));
+    $Receipt->method('tax')
+        ->will($this->returnValue(1.00));
+    $result = $Receipt->testPostTaxTotal([1,2,5,8], 0.20, null);
+    $this->assertEquals(11.00, $result);
+  }
+
   public function testTax()
   {
     $inputAmount = 10.00;
