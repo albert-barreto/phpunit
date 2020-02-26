@@ -23,16 +23,27 @@ class ReceiptTest extends TestCase
     unset($this->Receipt);
   }
 
-  public function testTotal()
+  /**
+  * @dataProvider provideTotal
+  */
+  public function testTotal($items, $expected)
   {
-    $input = [0,2,5,8];
     $coupon = null;
-    $output = $this->Receipt->total($input, $coupon);
+    $output = $this->Receipt->total($items, $coupon);
     $this->assertEquals(
-      15,
+      $expected,
       $output,
-      'When summing the total should equal 15'
+      "When summing the total should equal {$expected}"
     );
+  }
+
+  public function provideTotal()
+  {
+    return [
+      [[1,2,5,8], 16],
+      [[-1,2,5,8], 14],
+      [[1,2,8], 11],
+    ];
   }
 
   public function testTotalAndCoupon()
