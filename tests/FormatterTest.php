@@ -9,13 +9,14 @@ use TDD\Formatter;
 
 class FormatterTest extends TestCase
 {
+    private $Formatter;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->Formatter = new Formatter();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
       unset($this->Formatter);
     }

@@ -6,6 +6,8 @@ use \BadMethodCallException;
 
 class Receipt
 {
+  public $Formatter;
+  public $tax;
 
   public function __construct($formatter)
   {

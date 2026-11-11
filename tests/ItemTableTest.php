@@ -8,7 +8,10 @@ use \PDO;
 
 class ItemsTableTest extends TestCase {
 
-    public function setUp() {
+    private $PDO;
+    private $ItemsTable;
+
+    public function setUp(): void {
         $this->PDO = $this->getConnection();
         $this->createTable();
         $this->populateTable();
@@ -16,7 +19,7 @@ class ItemsTableTest extends TestCase {
         $this->ItemsTable = new ItemsTable($this->PDO);
     }
 
-    public function tearDown() {
+    public function tearDown(): void {
         unset($this->ItemsTable);
         unset($this->PDO);
     }
@@ -25,8 +28,7 @@ class ItemsTableTest extends TestCase {
         $id = 1;
 
         $result = $this->ItemsTable->findForId($id);
-        $this->assertInternalType(
-            'array',
+        $this->assertIsArray(
             $result,
             'The result should always be an array.'
         );
@@ -46,20 +48,20 @@ class ItemsTableTest extends TestCase {
         $id = 1;
 
         $PDOStatement = $this->getMockBuilder('\PDOStatement')
-            ->setMethods(['execute', 'fetch'])
+            ->onlyMethods(['execute', 'fetch'])
             ->getMock();
 
         $PDOStatement->expects($this->once())
             ->method('execute')
             ->with([$id])
-            ->will($this->returnSelf());
+            ->willReturn(true);
         $PDOStatement->expects($this->once())
             ->method('fetch')
             ->with($this->anything())
             ->will($this->returnValue('canary'));
 
         $PDO = $this->getMockBuilder('\PDO')
-            ->setMethods(['prepare'])
+            ->onlyMethods(['prepare'])
             ->disableOriginalConstructor()
             ->getMock();
 

@@ -12,11 +12,13 @@ use TDD\Receipt;
  */
 class ReceiptTest extends TestCase
 {
+  private $Formatter;
+  private $Receipt;
 
-  public function setUp()
+  public function setUp(): void
   {
       $this->Formatter = $this->getMockBuilder('TDD\Formatter')
-          ->setMethods(['currencyAmt'])
+          ->onlyMethods(['currencyAmt'])
           ->getMock();
       $this->Formatter->expects($this->any())
           ->method('currencyAmt')
@@ -25,7 +27,7 @@ class ReceiptTest extends TestCase
       $this->Receipt = new Receipt($this->Formatter);
   }
 
-  public function tearDown()
+  public function tearDown(): void
   {
     unset($this->Receipt);
   }
@@ -79,7 +81,7 @@ class ReceiptTest extends TestCase
     $tax = 0.20;
     $coupon = null;
     $Receipt = $this->getMockBuilder('TDD\Receipt')
-        ->setMethods(['tax', 'subTotal'])
+        ->onlyMethods(['tax', 'subTotal'])
         ->setConstructorArgs([$this->Formatter])
         ->getMock();
     $Receipt->expects($this->once())
